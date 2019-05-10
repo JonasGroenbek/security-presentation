@@ -5,6 +5,7 @@ const root = require("./graphQL/resolvers");
 const graphqlHTTP = require("express-graphql");
 const schema = require("./graphQL/schema");
 
+app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layouts'}))
 app.use(bodyParser.json({
     extended: true
 }));
