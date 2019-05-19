@@ -24,6 +24,15 @@ app.use(express.static(__dirname + '/views'))
 app.get("/", (req, res) => {
     res.render("index.ejs");
 })
+
+app.get("/feed", (req, res) => {
+    res.render("feed.ejs");
+})  
+ 
+app.get("/searchUsers", (req, res) => {
+    //do stuff
+})
+
 app.post("/login", (req, res) => {
     const {username, password} = req.body;
     res.status(200).send(req.body)
