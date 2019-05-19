@@ -13,6 +13,7 @@ function validateUser(username, password) {
     return new Promise((resolve, reject) => {
         const query = `SELECT password from users where username = "${username}";`
         db.query(query, function (error, results, fields) {
+            console.log(results[0].password)
             if (error) {
                 reject(error);
             } if (results.length > 0) {

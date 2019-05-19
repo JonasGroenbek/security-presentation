@@ -44,4 +44,4 @@ server.on('listening', onListening);
 
 connect();
 
-module.exports = { server, connect, disconnect }
+module.exports = { server, connect, disconnect, PORT}

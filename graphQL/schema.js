@@ -3,13 +3,13 @@ const buildSchema = require("graphql").buildSchema;
 const schema = buildSchema(
     `
     type Query {
-        validateUser(input: Credentials!) : String
+        validateUser(credentials: Credentials) : String
         getComments : Comments
-        search(input: Int): Comments
+        search(userId: Int): Comments
     }
 
     type Mutation {
-        createUser(input: Credentials!) : String
+        createUser(credentials: Credentials!) : String
         createComment(input: tokenAndContent!) : String
     }
 
