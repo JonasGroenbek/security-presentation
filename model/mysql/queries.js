@@ -153,7 +153,6 @@ function loadComments() {
                 let parsedResults = [];
                 results.forEach((result) => {
                     parsedResults.push({content: result.content, username: result.username, created: result.created});
-                    console.log(parsedResults.toString());
                 })
                 resolve({
                     comments: parsedResults
