@@ -2,12 +2,11 @@ const express = require("express")
 const app = express();
 const bodyParser = require('body-parser');
 const userController = require("./controller/userController");
-const root = require("./graphQL/resolvers");
-const graphqlHTTP = require("express-graphql");
-const schema = require("./graphQL/schema");
-const fetch = require("node-fetch");
-const PORT = require("./server").PORT;
+const commentController = require("./controller/commentController");
+const cookieParser = require("cookie-parser");
+const jwt = require("./model/jwt/jwt");
 
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -15,43 +14,89 @@ app.use(bodyParser.json({
     extended: true
 }));
 
-app.use("/graphql", graphqlHTTP({
-    schema: schema,
-    rootValue: root,
-    graphiql: false
-}))
-
 app.engine('.ejs', require('ejs').__express);
 app.set('views', __dirname + '/views')
 app.use(express.static(__dirname + '/views'))
 
 app.get("/", (req, res) => {
-    res.render("index.ejs");
+    if (req.cookies.token) {
+        res.render("feed.ejs");
+    } else {
+        res.render("index.ejs", {
+            msg: ""
+        });
+    }
 })
 
-app.get("/search/:userId", (req,res) => {
+app.get("/logout", (req, res) => {
+    res.clearCookie('token', { domain: "localhost", path: "/" });
+    res.render("index.ejs", {
+        msg: ""
+    });
 })
-
-/*
-    fetch(`http://localhost:${1234}/graphql?query=query {
-        search(userId:${req.params.userId}){
-          comments{
-            content
-          }
-        }
-      }
-      `, {
-        headers: { 
-            method: 'get',
-            'Content-Type': 'application/json' }
-      }).then(res => res.json())
-      .then(json => res.status(200).send(json.data.search.comments))
-*/
 
 app.post("/login", (req, res) => {
-    const {username, password} = req.body;
-    fetch(`localhost:${PORT}/graphql?`)
-    res.status(200).send(req.body)
+    const { username, password } = req.body;
+    if (username === "" || password === "") {
+        res.render("index.ejs", {
+            msg: "please provide both a username, and a password"
+        });
+    } else {
+        userController.validateUser(username, password)
+            .then(token => {
+                res.setHeader("Set-Cookie", `token=${token}`)
+                res.render("feed.ejs")
+            }, rejection => {
+                res.render("index.ejs", {
+                    msg: rejection
+                });
+            })
+    }
+})
+
+app.post("/createUser", (req, res) => {
+    const { username, password, secret } = req.body;
+    userController.createUser(username, password, secret).then(token => {
+        res.setHeader("Set-Cookie", `token=${token}`)
+        res.render("feed.ejs")
+    }).catch(rejection => {
+        res.render("index.ejs", {
+            msg: rejection
+        });
+    })
+
+})
+
+app.post("/comment", (req, res) => {
+    if (!req.cookies.token) {
+        res.render("index.ejs", {
+            msg: "could not verify you"
+        });
+    }
+    const { username } = jwt.verifyToken(req.cookies.token);
+    for (let index = 0; index < 5; index++) {
+        const {content} = req.body;
+        console.log(content)
+    }
+    const { content } = req.body;
+    commentController.comment(content, username);
+    res.render("feed.ejs");
+
+
+
+})
+
+app.post("/searchUsers", (req, res) => {
+    if (!req.cookies.token) {
+        res.render("index.ejs", {
+            msg: "could not verify you"
+        });
+    }
+
+})
+
+app.get("/search", (req, res) => {
+
 })
 
 module.exports = app;

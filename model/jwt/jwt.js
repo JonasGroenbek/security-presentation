@@ -37,12 +37,6 @@ function verifyToken(token){
     return jwt.verify(token, publicKey, verifyOptions);
 }
 
-function test(payload){
-    console.log(verifyToken(signToken(payload)))
-}
-
-test({username: "username"});
-
 module.exports = {
     signToken,
     verifyToken

@@ -4,8 +4,8 @@ function validateUser(username, password){
     return queries.validateUser(username, password)
 }
 
-function createUser(username, password){ 
-    return queries.createUser(username, password)
+function createUser(username, password, secret){ 
+    return queries.createUser(username, password, secret)
 }
 
 module.exports = {

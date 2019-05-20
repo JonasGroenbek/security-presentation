@@ -1,24 +1,31 @@
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Security Presentation</title>
+    <title>Security Presentation - Index</title>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css" />
 </head>
+
 <body>
     <h1>THIS IS A HEADER</h1>
-    <p>login</p>
-    <form method="POST" action="/login">
+    <br>
+    <br>
+        <p> <% if(msg) { %> <%= msg %> <% } %> </p>
+        <p>login</p>
+        <form method="POST" action="/login">
+            <input type="text" name="username" placeholder="username"></input>
+            <input type="text" name="password" placeholder="password"></input>
+            <input type="submit" value="Login"></input>
+        </form>
+    <p>register</p>
+    <form method="POST" action="/createUser">
         <input type="text" name="username" placeholder="username"></input>
         <input type="text" name="password" placeholder="password"></input>
-        <input type="submit"></input>
+        <input type="text" name="secret" placeholder="Your biggest secret"></input>
+        <input type="submit" value="Sign up"></input>
     </form>
-
-    <p>register</p>
-    <form>
-            <input type="text" name="username" placeholder="username"></input>
-            <input type="text" name="password1" placeholder="password"></input>
-            <input type="text" name="password2" placeholder="same password"></input>
-            <input type="submit"></input>
-        </form>
 </body>
+
 </html>

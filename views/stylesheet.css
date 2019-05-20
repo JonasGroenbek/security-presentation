@@ -1,0 +1,46 @@
+ul {
+    list-style: none;
+    margin: 0;
+}
+li {
+    float: left;
+    margin-right: 50px;
+    border: solid black 1px;
+    padding: 5px;
+}
+a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+}
+a p {
+    text-align: center;
+    width: 80px;
+    margin: 0;
+}
+form {
+    margin: 0;
+}
+.mp {
+    width: 80px;
+}
+nav {
+    float: left;
+    width: 100%;
+
+}
+article {
+    float: left;
+    width: 100%;
+}
+.comment {
+    border: solid black 1px;
+    padding: 5px;
+}
+.user {
+    border: solid black 1px;
+    padding: 5px;
+}
+.articlediv {
+    width: 60%;
+}

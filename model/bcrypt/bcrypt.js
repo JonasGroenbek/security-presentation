@@ -22,7 +22,15 @@ function hashPassword(plaintextPassword) {
  * @returns {Promise}
  */
 function matchPassword(plaintextPassword, hash) {
-    return bcrypt.compare(plaintextPassword, hash)
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(plaintextPassword, hash, function (err, res) {
+            if (res) {
+                resolve(res);
+            } else {
+                reject("username and password doesn't match");
+            }
+        });
+    })
 }
 
 module.exports = {

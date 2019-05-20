@@ -6,6 +6,7 @@ CREATE TABLE users
 (
   id SERIAL, 
   username VARCHAR(20) NOT NULL UNIQUE,
+  secret VARCHAR(100) NOT NULL,
   password VARCHAR(150) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -22,6 +23,6 @@ CREATE TABLE comments
   PRIMARY KEY (id)
 );
 
-INSERT into users(username, password) VALUES("test","$2a$10$FGvdWYpBaa55vFNppK1OtunE3GD1vscczpfT0Xoie0zjXpCjxGdAO"); -- password is 1234
+INSERT into users(username, secret, password) VALUES("test", "I am just a test user..", "$2a$10$FGvdWYpBaa55vFNppK1OtunE3GD1vscczpfT0Xoie0zjXpCjxGdAO"); -- password is 1234
 INSERT into comments(content, userId) VALUES("I am test's comment!", "1");
    

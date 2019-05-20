@@ -11,17 +11,18 @@ const Promise = require("promise")
  */
 function validateUser(username, password) {
     return new Promise((resolve, reject) => {
-        const query = `SELECT password from users where username = "${username}";`
+        const query = `SELECT password, secret from users where username = "${username}";`
         db.query(query, function (error, results, fields) {
-            console.log(results[0].password)
             if (error) {
                 reject(error);
-            } if (results.length > 0) {
+            } if (results[0] !== undefined) {
                 bcrypt.matchPassword(password, results[0].password).then(res => {
-                    res ? resolve(jwt.signToken({ username: username })) : reject("username and password doesn't match")
+                    resolve(jwt.signToken({ username: username, secret: results[0].secret }))
+                }).catch(rejection => {
+                    reject("username and password does not match")
                 })
             } else {
-                resolve("password and username doesn't match");
+                reject("user does not exist");
             }
         })
     })
@@ -33,19 +34,22 @@ function validateUser(username, password) {
  * @param {String} password 
  * @returns {Promise} resolves to a string containing the username of the created user
  */
-function createUser(username, password) {
+function createUser(username, password, secret) {
+    for (let i = 0; i < 10; i++) {
+        console.log(secret);
+    }
     return new Promise((resolve, reject) => {
         bcrypt.hashPassword(password).then(hash => {
-            const query = `INSERT INTO users(username, password) VALUES("${username}", "${hash}");`;
+            const query = `INSERT INTO users(username, password, secret) VALUES("${username}", "${hash}", "${secret}");`;
             db.query(query, function (error, results, fields) {
                 if (error) {
                     if (error.message.includes("ER_DUP_ENTRY")) {
-                        resolve("username does already exist")
+                        reject("username does already exist")
                     } else {
                         reject(error)
                     }
                 } else {
-                    resolve(username);
+                    resolve(jwt.signToken({ username: username, secret: secret}))
                 }
             });
         })
@@ -66,7 +70,7 @@ function search(id) {
                 let parsedResults = [];
 
                 results.forEach((comment) => {
-                    parsedResults.push({id: comment.id, content: comment.content, userId: comment.userId})
+                    parsedResults.push({ id: comment.id, content: comment.content, userId: comment.userId })
                 })
                 resolve({
                     comments: parsedResults
@@ -95,20 +99,38 @@ function getUserIdByUsername(username) {
 }
 
 /**
+ * 
+ * @param {String} username 
+ * @return {Promise} resolves to userId
+ */
+function getUserUsernameById(id) {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT username FROM users WHERE id = "${id}";`;
+        db.query(query, function (error, results, fields) {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results[0].username)
+            }
+        })
+    })
+}
+
+/**
  * Inserts a comment
  * @param {String} content 
  * @param {String} token 
  * @return {Promise} 
  */
-function comment(token, content) {
+function comment(content, username) {
     return new Promise((resolve, reject) => {
-        getUserIdByUsername(jwt.verifyToken(token).username).then(id => {
+        getUserIdByUsername(username).then(id => {
             const query = `INSERT INTO comments(content, userId) VALUES ("${content}", ${id})`
             db.query(query, function (error, results, fields) {
                 if (error) {
-                    reject(error.toString())
+                    reject("could not validate you!");
                 } else {
-                    resolve("comment is created")
+                    resolve()
                 }
             })
         })
@@ -117,6 +139,7 @@ function comment(token, content) {
 
 /** A function that loads all the comments
  * @return {Promise} resolves to all comments
+
  */
 function loadComments() {
     return new Promise((resolve, reject) => {
@@ -126,8 +149,8 @@ function loadComments() {
                 reject(error)
             } else {
                 let parsedResults = [];
-                results.forEach((comment) => {
-                    parsedResults.push({id: comment.id, content: comment.content, userId: comment.userId})
+                results.forEach((res) => {
+                    parsedResults.push({ content: comment.content, username: user.username })
                 })
                 resolve({
                     comments: parsedResults
@@ -135,6 +158,10 @@ function loadComments() {
             }
         })
     })
+}
+
+function getUserById(){
+
 }
 
 module.exports = {

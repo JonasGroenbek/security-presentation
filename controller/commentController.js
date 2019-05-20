@@ -23,8 +23,8 @@ function loadComments(){
  * @param {String} token 
  * @return {Promise} resolves to String
  */
-function comment(content, token){
-    return queries.comment(content, token)
+function comment(content, username){
+    return queries.comment(content, username)
 }
 
 module.exports = {
