@@ -16,6 +16,12 @@ function loadComments(){
     return queries.loadComments();
 }
 
+/** A function that loads all the comments
+ * @return {Promise} resolves to all comments
+ */
+function loadCommentsWithInfo(){
+    return queries.loadCommentsWithInfo();
+}
 
 /**
  * Inserts a comment
@@ -30,5 +36,6 @@ function comment(content, token){
 module.exports = {
     search,
     loadComments,
+    loadCommentsWithInfo,
     comment
 }

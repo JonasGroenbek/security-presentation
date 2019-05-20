@@ -14,6 +14,9 @@ const root = {
     getComments: async () => {
         return await commentController.loadComments();
     },
+    getCommentsWithInfo: async () => {
+        return await commentController.loadCommentsWithInfo();
+    },
     search: async ({ input }) => {
         return await commentController.search(input)
     }

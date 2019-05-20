@@ -136,10 +136,37 @@ function loadComments() {
     })
 }
 
+/** A function that loads all the comments with user info
+ * @return {Promise} resolves to all comments
+ */
+function loadCommentsWithInfo() {
+    return new Promise((resolve, reject) => {
+        const query = "SELECT c.content, c.created, u.username"
+        +"FROM comments c"
+        +"LEFT JOIN users u ON u.id = c.userId"
+        +"ORDER BY c.created DESC;";
+        db.query(query, function (error, results, fields) {
+            if (error) {
+                reject(error)
+            } else {
+                let parsedResults = [];
+                results.forEach((comment) => {
+                    parsedResults.push({id: comment.id, content: comment.content, userId: comment.userId, username: comment.username})
+                    console.log(parsedResults.toString());
+                })
+                resolve({
+                    comments: parsedResults
+                });
+            }
+        })
+    })
+}
+
 module.exports = {
     validateUser,
     createUser,
     loadComments,
+    loadCommentsWithInfo,
     comment,
     search
 }
