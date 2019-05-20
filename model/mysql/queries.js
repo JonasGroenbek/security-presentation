@@ -151,7 +151,7 @@ function loadCommentsWithInfo() {
             } else {
                 let parsedResults = [];
                 results.forEach((comment) => {
-                    parsedResults.push({id: comment.id, content: comment.content, userId: comment.userId, username: comment.username})
+                    parsedResults.push({username: comment.username, comment: comment.content, created: comment.created})
                     console.log(parsedResults.toString());
                 })
                 resolve({
