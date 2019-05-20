@@ -142,9 +142,9 @@ function comment(content, username) {
  */
 function loadComments() {
     return new Promise((resolve, reject) => {
-        const query = "SELECT c.content, c.created, u.username"
-        +"FROM comments c"
-        +"LEFT JOIN users u ON u.id = c.userId"
+        const query = "SELECT c.content, c.created, c.userId, u.username, u.id "
+        +"FROM comments c "
+        +"LEFT JOIN users u ON u.id = c.userId "
         +"ORDER BY c.created DESC;";
         db.query(query, function (error, results, fields) {
             if (error) {
