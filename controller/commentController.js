@@ -9,13 +9,13 @@ function search(id){
     return queries.search(id)
 };
 
+
 /** A function that loads all the comments
  * @return {Promise} resolves to all comments
  */
 function loadComments(){
     return queries.loadComments();
 }
-
 
 /**
  * Inserts a comment

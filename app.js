@@ -99,4 +99,10 @@ app.get("/search", (req, res) => {
 
 })
 
+commentController.loadComments().then(res => {
+    console.log(res)
+}).catch(rejection => {
+    console.log(rejection)
+})
+
 module.exports = app;

@@ -137,20 +137,23 @@ function comment(content, username) {
     })
 }
 
-/** A function that loads all the comments
+/** A function that loads all the comments with user info
  * @return {Promise} resolves to all comments
-
  */
 function loadComments() {
     return new Promise((resolve, reject) => {
-        const query = "SELECT * FROM comments";
+        const query = "SELECT c.content, c.created, u.username"
+        +"FROM comments c"
+        +"LEFT JOIN users u ON u.id = c.userId"
+        +"ORDER BY c.created DESC;";
         db.query(query, function (error, results, fields) {
             if (error) {
                 reject(error)
             } else {
                 let parsedResults = [];
-                results.forEach((res) => {
-                    parsedResults.push({ content: comment.content, username: user.username })
+                results.forEach((result) => {
+                    parsedResults.push({content: result.content, username: result.username, created: result.created});
+                    console.log(parsedResults.toString());
                 })
                 resolve({
                     comments: parsedResults
@@ -158,10 +161,6 @@ function loadComments() {
             }
         })
     })
-}
-
-function getUserById(){
-
 }
 
 module.exports = {
