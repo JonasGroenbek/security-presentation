@@ -75,7 +75,7 @@ app.post("/comment", (req, res) => {
     }
     const { username } = jwt.verifyToken(req.cookies.token);
     for (let index = 0; index < 5; index++) {
-        const {content} = req.body;
+        const { content } = req.body;
         console.log(content)
     }
     const { content } = req.body;
@@ -98,6 +98,21 @@ app.post("/searchUsers", (req, res) => {
 app.get("/search", (req, res) => {
 
 })
+
+app.get("/comments", (req, res) => {
+    var comments_var = commentController.loadComments()
+    res.render("feed.ejs", {
+        comments: comments_var
+    });
+})
+
+// commentController.loadComments().then(res => {
+//     res.render("feed.ejs", {
+//         comments: res
+//     });
+// }).catch(rejection => {
+//     console.log(rejection)
+// })
 
 commentController.loadComments().then(res => {
     console.log(res)

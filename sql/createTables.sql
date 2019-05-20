@@ -26,5 +26,3 @@ CREATE TABLE comments
 
 INSERT into users(username, secret, password) VALUES("test", "I am just a test user..", "$2a$10$FGvdWYpBaa55vFNppK1OtunE3GD1vscczpfT0Xoie0zjXpCjxGdAO"); -- password is 1234
 INSERT into comments(content, userId) VALUES("I am test's comment!", "1");
-
-);
