@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <html>
 <head>
     <meta charset="UTF-8">
@@ -53,4 +54,68 @@
     </article>
 </body>
 
+=======
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Security Presentation - Feed</title>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+</head>
+
+<body>
+    <h1>Feed</h1>
+    <nav>
+        <ul>
+            <li class="mp">
+                <form action="/logout" method="get">
+                    <input type="submit" value="logout">
+                </form>
+            </li>
+            <form method="GET" action="/searchUsers">
+                <input type="text" name="username" placeholder="username">
+                <input type="submit" value="Search">
+            </form>
+            </li>
+        </ul>
+    </nav>
+    <form action="/comment" method="POST">
+        <input type="text" name="content" placeholder="content">
+        <input type="submit" value="Submit">
+    </form>
+    <article>
+        <div class="articlediv">
+            <h2>Comments</h2>
+            <% if (comments !== undefined) {%>
+            <% for(let i = 0; i < comments.length; i++) { %>
+            <div class="comment">
+                <div>
+                    <h3><%= comments[i].username %></h3>
+                    <h4><%= comments[i].created %></h4>
+                </div>
+                <div>
+                    <p><%= comments[i].content %></p>
+                </div>
+            </div>
+            <% }}else{ %>
+            <div class="comment">
+                no comments
+            </div>
+            <% } %>
+        </div>
+        <div class="articlediv">
+            <h2>Users</h2>
+            <p>show user search results below</p>
+            <div class="user">
+                <div>
+                    <h3>[username]</h3>
+                </div>
+            </div>
+        </div>
+    </article>
+</body>
+
+>>>>>>> 76fe43b25a97aacdc3ab8766080d31c59574f950
 </html>

@@ -1,4 +1,4 @@
-const express = require("express")
+const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
 const userController = require("./controller/userController");
@@ -118,10 +118,6 @@ app.post("/searchUser", (req, res) => {
             msg: "could not verify you"
         });
     }
-})
-
-commentController.loadComments().then(res => {
-    console.log(res)
 })
 
 module.exports = app;
