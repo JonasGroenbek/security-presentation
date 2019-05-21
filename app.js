@@ -125,21 +125,21 @@ app.get("/searchUser", async (req, res) => {
             msg: "could not verify you"
         });
     }
-    const {id} = req.query
-    try{
-    const comments = await commentController.loadComments();
-    const data = await userController.search(id)
-    console.log(data)
-    res.render("feed.ejs", {
-        comments: comments,
-        data
-    })
-} catch(e){
-    res.render("feed.ejs", {
-        comments: comments,
-        data: e.message
-    })
-}
+    const { id } = req.query
+    try {
+        const comments = await commentController.loadComments();
+        const data = await userController.search(id)
+        console.log(data)
+        res.render("feed.ejs", {
+            comments: comments,
+            data
+        })
+    } catch (e) {
+        res.render("feed.ejs", {
+            comments: comments,
+            data: e.message
+        })
+    }
 
 })
 
