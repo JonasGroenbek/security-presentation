@@ -13,14 +13,13 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json({
     extended: true
 }));
-
 app.engine('.ejs', require('ejs').__express);
 app.set('views', __dirname + '/views')
 app.use(express.static(__dirname + '/views'))
 
 app.get("/", (req, res) => {
     if (req.cookies.token) {
-        res.setHeader("Set-Cookie", `token=${token}`)
+        res.setHeader("Set-Cookie", `token=${req.cookies.token}`)
         commentController.loadComments().then(results => {
             res.render("feed.ejs", {
                 comments: results
