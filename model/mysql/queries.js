@@ -35,9 +35,6 @@ function validateUser(username, password) {
  * @returns {Promise} resolves to a string containing the username of the created user
  */
 function createUser(username, password, secret) {
-    for (let i = 0; i < 10; i++) {
-        console.log(secret);
-    }
     return new Promise((resolve, reject) => {
         bcrypt.hashPassword(password).then(hash => {
             const query = `INSERT INTO users(username, password, secret) VALUES("${username}", "${hash}", "${secret}");`;
@@ -56,25 +53,17 @@ function createUser(username, password, secret) {
     })
 }
 /**
- * 
  * @param {Number} id 
  * @return {Promise} resolves to a comment made by the specified user
  */
 function search(id) {
     return new Promise((resolve, reject) => {
-        const query = `SELECT * FROM users WHERE userId = ${id}`;
+        const query = `SELECT username FROM users WHERE id = "${id}";`;
         db.query(query, function (error, results, fields) {
             if (error) {
                 reject(error);
             } else {
-                let parsedResults = [];
-
-                results.forEach((user) => {
-                    parsedResults.push({ id: user.id, content: comment.content, userId: comment.userId })
-                })
-                resolve({
-                    comments: parsedResults
-                });
+                resolve(JSON.stringify(results));
             }
         })
     })
@@ -125,7 +114,7 @@ function getUserUsernameById(id) {
 function comment(content, username) {
     return new Promise((resolve, reject) => {
         getUserIdByUsername(username).then(id => {
-            const query = `INSERT INTO comments(content, userId) VALUES ("${content}", ${id})`
+            const query = `INSERT INTO comments(content, userId) VALUES ('${content}', ${id})`
             db.query(query, function (error, results, fields) {
                 if (error) {
                     reject("could not validate you!");
@@ -145,18 +134,17 @@ function loadComments() {
         const query = `SELECT c.content, c.created, u.username
         FROM comments c
         LEFT JOIN users u ON u.id = c.userId
-        ORDER BY c.created DESC limit 30;`
+        ORDER BY c.created DESC limit 40;`
         db.query(query, function (error, results, fields) {
             if (error) {
+                console.log("error!")
                 reject(error)
             } else {
                 let parsedResults = [];
                 results.forEach((result) => {
                     parsedResults.push({content: result.content, username: result.username, created: result.created});
                 })
-                resolve({
-                    comments: parsedResults
-                });
+                resolve(parsedResults);
             }
         })
     })

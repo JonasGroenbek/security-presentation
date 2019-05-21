@@ -22,11 +22,13 @@ app.get("/", (req, res) => {
         res.setHeader("Set-Cookie", `token=${req.cookies.token}`)
         commentController.loadComments().then(results => {
             res.render("feed.ejs", {
-                comments: results
+                comments: results,
+                data: null
             })
         }).catch(rejection => {
             res.render("feed.ejs", {
-                comments: rejection
+                comments: rejection,
+                data: null
             })
         })
     } else {
@@ -55,11 +57,13 @@ app.post("/login", (req, res) => {
                 res.setHeader("Set-Cookie", `token=${token}`)
                 commentController.loadComments().then(results => {
                     res.render("feed.ejs", {
-                        comments: results
+                        comments: results,
+                        data: null
                     })
                 }).catch(rejection => {
                     res.render("feed.ejs", {
-                        comments: rejection
+                        comments: rejection,
+                        data: null
                     })
                 })
             }, rejection => {
@@ -76,11 +80,13 @@ app.post("/createUser", (req, res) => {
         res.setHeader("Set-Cookie", `token=${token}`)
         commentController.loadComments().then(results => {
             res.render("feed.ejs", {
-                comments: results
+                comments: results,
+                data: null
             })
         }).catch(rejection => {
             res.render("feed.ejs", {
-                comments: rejection
+                comments: rejection,
+                data: null
             })
         })
     }).catch(rejection => {
@@ -91,7 +97,7 @@ app.post("/createUser", (req, res) => {
 
 })
 
-app.post("/comment", (req, res) => {
+app.post("/comment", async (req, res) => {
     if (!req.cookies.token) {
         res.render("index.ejs", {
             msg: "could not verify you"
@@ -99,24 +105,42 @@ app.post("/comment", (req, res) => {
     }
     const { username } = jwt.verifyToken(req.cookies.token);
     const { content } = req.body;
-    commentController.comment(content, username);
+    await commentController.comment(content, username);
     commentController.loadComments().then(results => {
         res.render("feed.ejs", {
-            comments: results
+            comments: results,
+            data: null
         })
     }).catch(rejection => {
         res.render("feed.ejs", {
-            comments: rejection
+            comments: rejection,
+            data: null
         })
     })
 })
 
-app.post("/searchUser", (req, res) => {
+app.get("/searchUser", async (req, res) => {
     if (!req.cookies.token) {
         res.render("index.ejs", {
             msg: "could not verify you"
         });
     }
+    const {id} = req.query
+    try{
+    const comments = await commentController.loadComments();
+    const data = await userController.search(id)
+    console.log(data)
+    res.render("feed.ejs", {
+        comments: comments,
+        data
+    })
+} catch(e){
+    res.render("feed.ejs", {
+        comments: comments,
+        data: e.message
+    })
+}
+
 })
 
 module.exports = app;

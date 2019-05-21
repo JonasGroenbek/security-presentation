@@ -32,8 +32,4 @@ CREATE TABLE secret
 
 INSERT INTO secret(mostSecureSecretInTheWorld) VALUES ("You deserve a beer.");
 INSERT into users(username, secret, password) VALUES("test", "I am just a test user..", "$2a$10$FGvdWYpBaa55vFNppK1OtunE3GD1vscczpfT0Xoie0zjXpCjxGdAO"); -- password is 1234
-<<<<<<< HEAD
-INSERT into comments(content, userId) VALUES("I am test's comment!", "1");
-=======
-INSERT into comments(content, userId) VALUES("I am test's comment!", "1");
->>>>>>> 76fe43b25a97aacdc3ab8766080d31c59574f950
+
