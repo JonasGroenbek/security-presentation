@@ -14,7 +14,7 @@ CREATE TABLE users
 CREATE TABLE comments
 (
   id SERIAL,
-  content VARCHAR(255) NOT NULL,
+  content VARCHAR(800) NOT NULL,
   userId BIGINT(20) unsigned,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   CONSTRAINT fk_comments_has_user
