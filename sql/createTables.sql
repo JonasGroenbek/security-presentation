@@ -24,7 +24,12 @@ CREATE TABLE comments
   PRIMARY KEY (id)
 );
 
+CREATE TABLE secret
+(
+  id SERIAL,
+  mostSecureSecretInTheWorld VARCHAR(20) NOT NULL UNIQUE
+);
+
+INSERT INTO secret(mostSecureSecretInTheWorld) VALUES ("You deserve a beer.");
 INSERT into users(username, secret, password) VALUES("test", "I am just a test user..", "$2a$10$FGvdWYpBaa55vFNppK1OtunE3GD1vscczpfT0Xoie0zjXpCjxGdAO"); -- password is 1234
 INSERT into comments(content, userId) VALUES("I am test's comment!", "1");
-
-);

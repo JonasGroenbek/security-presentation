@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +26,9 @@
     <form action="/comment" method="POST">
     <input type="text" name="content" placeholder="content">
     <input type="submit" value="Submit">
-    </form>
+    <div id="table">
+    </div>
+    </form>    <%= JSON.parse(comments).map() %>
     <article>
         <div class="articlediv">
             <h2>Comments</h2>

@@ -62,15 +62,15 @@ function createUser(username, password, secret) {
  */
 function search(id) {
     return new Promise((resolve, reject) => {
-        const query = `SELECT * FROM comments WHERE userId = ${id}`;
+        const query = `SELECT * FROM users WHERE userId = ${id}`;
         db.query(query, function (error, results, fields) {
             if (error) {
                 reject(error);
             } else {
                 let parsedResults = [];
 
-                results.forEach((comment) => {
-                    parsedResults.push({ id: comment.id, content: comment.content, userId: comment.userId })
+                results.forEach((user) => {
+                    parsedResults.push({ id: user.id, content: comment.content, userId: comment.userId })
                 })
                 resolve({
                     comments: parsedResults
@@ -142,10 +142,10 @@ function comment(content, username) {
  */
 function loadComments() {
     return new Promise((resolve, reject) => {
-        const query = "SELECT c.content, c.created, u.username"
-        +"FROM comments c"
-        +"LEFT JOIN users u ON u.id = c.userId"
-        +"ORDER BY c.created DESC;";
+        const query = `SELECT c.content, c.created, u.username
+        FROM comments c
+        LEFT JOIN users u ON u.id = c.userId
+        ORDER BY c.created DESC limit 30;`
         db.query(query, function (error, results, fields) {
             if (error) {
                 reject(error)
