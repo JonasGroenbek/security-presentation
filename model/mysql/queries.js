@@ -46,7 +46,7 @@ function createUser(username, password, secret) {
                         reject(error)
                     }
                 } else {
-                    resolve(jwt.signToken({ username: username, secret: secret}))
+                    resolve(jwt.signToken({ username: username, secret: secret }))
                 }
             });
         })
@@ -114,10 +114,10 @@ function getUserUsernameById(id) {
 function comment(content, username) {
     return new Promise((resolve, reject) => {
         getUserIdByUsername(username).then(id => {
-            const query = `INSERT INTO comments(content, userId) VALUES ('${content}', ${id})`
-            db.query(query, function (error, results, fields) {
+            const query = `INSERT INTO comments(content, userId) VALUES (?, ${id})`
+            db.query(query, [content], function (error, results, fields) {
                 if (error) {
-                    reject("could not validate you!");
+                    reject("something went wrong with commenting!");
                 } else {
                     resolve()
                 }
@@ -142,7 +142,7 @@ function loadComments() {
             } else {
                 let parsedResults = [];
                 results.forEach((result) => {
-                    parsedResults.push({content: result.content, username: result.username, created: result.created});
+                    parsedResults.push({ content: result.content, username: result.username, created: result.created });
                 })
                 resolve(parsedResults);
             }
