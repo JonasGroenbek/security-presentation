@@ -31,6 +31,7 @@ app.get("/", (req, res) => {
                 data: null
             })
         })
+
     } else {
         res.render("index.ejs", {
             msg: ""
@@ -126,10 +127,9 @@ app.get("/searchUser", async (req, res) => {
         });
     }
     const { id } = req.query
+    const comments = await commentController.loadComments();
     try {
-        const comments = await commentController.loadComments();
         const data = await userController.search(id)
-        console.log(data)
         res.render("feed.ejs", {
             comments: comments,
             data

@@ -1,7 +1,6 @@
 const app = require('./app');
-const http = require('http');
-const PORT = 1234;
+const PORT = 1235;
 
-const server = http.createServer(app);
-
-server.listen(PORT);
+app.listen(PORT, () => {
+    console.log("ready")
+});
