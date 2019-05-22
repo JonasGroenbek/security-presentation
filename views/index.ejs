@@ -6,11 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Security Presentation - Index</title>
     <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-    <h1>THIS IS A HEADER</h1>
+
+    <!--Bootstrap Navbar start-->
+    <!-- As a link -->
+    <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand" href="/">Yolo Bloggen</a>
+    </a>
+        <p class="navbar-brand">Heeeej Bloggen</p>
+      </nav>
+      
+          <!--Bootstrap Navbar end-->
     <br>
+    <h1 style="text-align: center; padding-top: 20px">Yolo Bloggen</h1>
+    <br>
+    <div class="container">
+    <div class="card card-body bg-light">
+    <p>Vi har Danmarks bedste blog! Vi har netop lavet aftaler med Fie Laursen, Mascha Vang og professionel skatboarder Jonas Grønbæk. 
+        Vi laver en blog til dig, så alle dine Instagram followers, kan gå ind og følge med, hver gang du skifter tøj eller drikker en Soya Latté. 
+        Så er du også træt af andre Blogger-platforme. Så hop ind på Yolo Bloggen, og begynd at sælge dine rabatkoder allerede i dag.
+        <br>
+        - Kristoffer, admin.  
+    </p>
+</div>
+</div>
+
     <br>
         <p> <% if(msg) { %> <%= msg %> <% } %> </p>
         <p>login</p>
@@ -26,6 +49,10 @@
         <input type="text" name="secret" placeholder="Your biggest secret"></input>
         <input type="submit" value="Sign up"></input>
     </form>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>
