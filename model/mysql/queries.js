@@ -58,7 +58,8 @@ function createUser(username, password, secret) {
  */
 function search(id) {
     return new Promise((resolve, reject) => {
-        const query = `SELECT username FROM users WHERE id = "${id}";`;
+        const query = `SELECT username FROM users WHERE id = ${id}`;
+        console.log({query});
         db.query(query, function (error, results, fields) {
             if (error) {
                 reject(error);
