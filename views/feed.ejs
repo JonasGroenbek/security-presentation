@@ -17,29 +17,30 @@
                     <input type="submit" value="logout">
                 </form>
             </li>
+
+            </li>
+        </ul>
+    </nav>
+
+    <article>
+        <div class="articlediv">
+            <h2>Users</h2>
             <form method="GET" action="/searchUser">
                 <input type="text" name="id" placeholder="username">
                 <input type="submit" value="Search">
             </form>
-            </li>
-        </ul>
-    </nav>
-    <form action="/comment" method="POST">
-        <input type="text" name="content" placeholder="content">
-        <input type="submit" value="Submit">
-    </form>
-    <article>
-        <div class="articlediv">
-            <h2>Users</h2>
-            <p>show user search results below</p>
             <div class="user">
-                <div>   
+                <div>
                     <h3> <% if(data) { %> <%= data %> <% } %> </h3>
                 </div>
             </div>
         </div>
         <div class="articlediv">
             <h2>Comments</h2>
+            <form action="/comment" method="POST">
+                <input type="text" name="content" placeholder="content">
+                <input type="submit" value="Search">
+            </form>
             <% if (comments !== undefined) {%>
             <% for(let i = 0; i < comments.length; i++) { %>
             <div class="comment">

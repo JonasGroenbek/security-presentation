@@ -22,7 +22,7 @@ form {
     margin: 0;
 }
 .mp {
-    width: 80px;
+    max-width: 100px;
 }
 nav {
     float: left;
@@ -36,10 +36,12 @@ article {
 .comment {
     border: solid black 1px;
     padding: 5px;
+    margin-top: 10px;
 }
 .user {
     border: solid black 1px;
     padding: 5px;
+    margin-top: 10px;
 }
 .articlediv {
     width: 60%;
